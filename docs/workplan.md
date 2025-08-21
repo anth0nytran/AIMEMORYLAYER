@@ -18,13 +18,12 @@ Last updated: 2025-08-21
 - [x] a) Initialize FastAPI app structure (`app/main.py`, `app/api`, `app/models`, `app/services`)
 - [x] b) Add Pydantic schemas (`ChatRequest`, `ChatResponse`, `HealthResponse`)
 - [x] c) Add routes: `/api/chat`, `/api/ingest`, `/api/health`
-- [ ] d) Add settings loader (env vars, `.env.example`)
 - [x] d) Add settings loader (env vars, `.env.example`)
 - [x] e) Add CORS config and basic rate limiting
 - [x] f) Add request/response logging with request_id and user_id
 
 ## Main Task 3 — Memory Layer: Pinecone Integration
-- [ ] a) Initialize Pinecone client and index config
+- [x] a) Initialize Pinecone client and index config
 - [ ] b) Implement upsert function with `user_id` isolation (namespace/metadata)
 - [ ] c) Implement query function with `top_k`, score threshold
 - [ ] d) Add simple recency bias (timestamp re-ranking)
@@ -51,7 +50,7 @@ Last updated: 2025-08-21
 - [ ] e) Local demo verification
 
 ## Main Task 7 — Local Dev + Testing
-- [ ] a) Add `requirements.txt` and `requirements-dev.txt`
+- [x] a) Add `requirements.txt` and `requirements-dev.txt`
 - [ ] b) Configure pytest with unit and integration tests
 - [ ] c) Add Makefile or simple scripts for run/test/lint (optional)
 - [ ] d) Smoke test script for `/api/health` and `/api/chat`
