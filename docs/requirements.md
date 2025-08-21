@@ -211,12 +211,12 @@ Build a resume-ready, deployed chatbot with per-user memory using FastAPI, Huggi
 
 ### Version Control & Workflow
 - GitHub as source of truth; all work occurs via branches and PRs.
-- Protect `main`: require PR reviews and passing checks before merge.
-- After each meaningful change:
-  - Commit with conventional message (e.g., feat:, fix:, docs:).
-  - Push branch to GitHub and open PR.
-  - Merge via squash or rebase after checks pass.
-- Tag milestones/releases (e.g., `v0.1.0`) for rollback.
+- Trunk-based development: `main` is always deployable. No direct pushes to `main`.
+- Branch naming: `feat/*`, `fix/*`, `chore/*`, `docs/*`.
+- Open a PR for every branch, even when solo; use PR description for change log.
+- Merge strategy: squash-merge; delete branch on merge.
+- Protect `main`: require passing checks before merge.
+- Tag milestones/releases (e.g., `v0.1.0`) for rollback; use `git revert` for hotfixes.
 - Keep `.cursor/mcp.json` and other secrets out of Git via `.gitignore`.
 
 ---

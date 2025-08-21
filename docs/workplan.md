@@ -98,8 +98,8 @@ Last updated: 2025-08-21
 - [x] c) Initialize local Git repository and first commit
 - [x] d) Create new GitHub repo, set `origin`, push `main`
 - [ ] e) Configure branch protection and required checks
-- [ ] f) Follow PR-based workflow with conventional commits and tags
-- [ ] g) Commit and push after each meaningful change
+- [x] f) Follow PR-based workflow with conventional commits and tags
+- [x] g) Commit and push after each meaningful change
 
 ---
 
