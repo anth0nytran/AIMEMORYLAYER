@@ -26,7 +26,7 @@ Last updated: 2025-08-21
 - [x] a) Initialize Pinecone client and index config
 - [x] b) Implement upsert function with `user_id` isolation (namespace/metadata)
 - [x] c) Implement query function with `top_k`, score threshold
-- [ ] d) Add simple recency bias (timestamp re-ranking)
+- [x] d) Add simple recency bias (timestamp re-ranking)
 - [ ] e) Unit tests: upsert and retrieval logic (mocked Pinecone)
 
 ## Main Task 4 — Embeddings + LLM (Hugging Face)
@@ -39,7 +39,7 @@ Last updated: 2025-08-21
 ## Main Task 5 — Chat Flow Integration
 - [~] a) Wire pipeline: message → embed → upsert → retrieve → prompt → LLM
 - [x] b) Include retrieved context in response payload for visibility
-- [ ] c) Optionally store assistant responses for future retrieval
+- [x] c) Optionally store assistant responses for future retrieval
 - [ ] d) Integration test: `/api/chat` end-to-end with mocks
 
 ## Main Task 6 — Frontend (Gradio MVP)
@@ -51,7 +51,7 @@ Last updated: 2025-08-21
 
 ## Main Task 7 — Local Dev + Testing
 - [x] a) Add `requirements.txt` and `requirements-dev.txt`
-- [ ] b) Configure pytest with unit and integration tests
+- [~] b) Configure pytest with unit and integration tests
 - [ ] c) Add Makefile or simple scripts for run/test/lint (optional)
 - [ ] d) Smoke test script for `/api/health` and `/api/chat`
 
