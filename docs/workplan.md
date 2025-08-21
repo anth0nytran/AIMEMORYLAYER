@@ -24,20 +24,20 @@ Last updated: 2025-08-21
 
 ## Main Task 3 — Memory Layer: Pinecone Integration
 - [x] a) Initialize Pinecone client and index config
-- [ ] b) Implement upsert function with `user_id` isolation (namespace/metadata)
-- [ ] c) Implement query function with `top_k`, score threshold
+- [x] b) Implement upsert function with `user_id` isolation (namespace/metadata)
+- [x] c) Implement query function with `top_k`, score threshold
 - [ ] d) Add simple recency bias (timestamp re-ranking)
 - [ ] e) Unit tests: upsert and retrieval logic (mocked Pinecone)
 
 ## Main Task 4 — Embeddings + LLM (Hugging Face)
-- [ ] a) Implement embeddings service (HF Inference API or local)
-- [ ] b) Implement LLM generation service (Mistral 7B / Llama 3 8B via HF)
-- [ ] c) Prompt assembly with retrieved context + system instructions
+- [x] a) Implement embeddings service (HF Inference API or local)
+- [x] b) Implement LLM generation service (Mistral 7B / Llama 3 8B via HF)
+- [x] c) Prompt assembly with retrieved context + system instructions
 - [ ] d) Optional streaming support for responses
 - [ ] e) Unit tests: prompt assembly and service adapters (mock HF)
 
 ## Main Task 5 — Chat Flow Integration
-- [ ] a) Wire pipeline: message → embed → upsert → retrieve → prompt → LLM
+- [~] a) Wire pipeline: message → embed → upsert → retrieve → prompt → LLM
 - [ ] b) Include retrieved context in response payload for visibility
 - [ ] c) Optionally store assistant responses for future retrieval
 - [ ] d) Integration test: `/api/chat` end-to-end with mocks
