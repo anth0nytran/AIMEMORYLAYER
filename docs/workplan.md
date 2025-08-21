@@ -31,8 +31,8 @@ Last updated: 2025-08-21
 
 ## Main Task 4 — Embeddings + LLM (Hugging Face)
 - [x] a) Implement embeddings service (HF Inference API or local)
-- [ ] b) Implement LLM generation service (Mistral 7B / Llama 3 8B via HF)
-- [ ] c) Prompt assembly with retrieved context + system instructions
+- [x] b) Implement LLM generation service (Mistral 7B / Llama 3 8B via HF)
+- [x] c) Prompt assembly with retrieved context + system instructions
 - [ ] d) Optional streaming support for responses
 - [ ] e) Unit tests: prompt assembly and service adapters (mock HF)
 
