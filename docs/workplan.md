@@ -19,6 +19,7 @@ Last updated: 2025-08-21
 - [x] b) Add Pydantic schemas (`ChatRequest`, `ChatResponse`, `HealthResponse`)
 - [x] c) Add routes: `/api/chat`, `/api/ingest`, `/api/health`
 - [ ] d) Add settings loader (env vars, `.env.example`)
+- [x] d) Add settings loader (env vars, `.env.example`)
 - [ ] e) Add CORS config and basic rate limiting
 - [ ] f) Add request/response logging with request_id and user_id
 
@@ -94,8 +95,8 @@ Last updated: 2025-08-21
 ## Main Task 13 — Version Control & Repo Management
 - [x] a) Add GitHub-first workflow to requirements and DoD
 - [x] b) Add `.gitignore` to exclude secrets and `.cursor/mcp.json`
-- [ ] c) Initialize local Git repository and first commit
-- [ ] d) Create new GitHub repo, set `origin`, push `main`
+- [x] c) Initialize local Git repository and first commit
+- [x] d) Create new GitHub repo, set `origin`, push `main`
 - [ ] e) Configure branch protection and required checks
 - [ ] f) Follow PR-based workflow with conventional commits and tags
 - [ ] g) Commit and push after each meaningful change
