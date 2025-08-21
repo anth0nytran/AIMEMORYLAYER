@@ -51,7 +51,7 @@ Last updated: 2025-08-21
 
 ## Main Task 7 — Local Dev + Testing
 - [x] a) Add `requirements.txt` and `requirements-dev.txt`
-- [ ] b) Configure pytest with unit and integration tests
+- [~] b) Configure pytest with unit and integration tests
 - [ ] c) Add Makefile or simple scripts for run/test/lint (optional)
 - [ ] d) Smoke test script for `/api/health` and `/api/chat`
 
