@@ -38,7 +38,7 @@ Last updated: 2025-08-21
 
 ## Main Task 5 — Chat Flow Integration
 - [~] a) Wire pipeline: message → embed → upsert → retrieve → prompt → LLM
-- [ ] b) Include retrieved context in response payload for visibility
+- [x] b) Include retrieved context in response payload for visibility
 - [ ] c) Optionally store assistant responses for future retrieval
 - [ ] d) Integration test: `/api/chat` end-to-end with mocks
 
