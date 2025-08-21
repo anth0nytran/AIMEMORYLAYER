@@ -20,8 +20,8 @@ Last updated: 2025-08-21
 - [x] c) Add routes: `/api/chat`, `/api/ingest`, `/api/health`
 - [ ] d) Add settings loader (env vars, `.env.example`)
 - [x] d) Add settings loader (env vars, `.env.example`)
-- [ ] e) Add CORS config and basic rate limiting
-- [ ] f) Add request/response logging with request_id and user_id
+- [x] e) Add CORS config and basic rate limiting
+- [x] f) Add request/response logging with request_id and user_id
 
 ## Main Task 3 — Memory Layer: Pinecone Integration
 - [ ] a) Initialize Pinecone client and index config
