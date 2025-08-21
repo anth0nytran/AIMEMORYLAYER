@@ -1,5 +1,7 @@
 import os
-from typing import Optional
+from typing import Optional, List
+from datetime import datetime, timezone
+import math
 
 from pinecone import Pinecone, ServerlessSpec, CloudProvider, AwsRegion, GcpRegion, AzureRegion, Metric, VectorType
 
@@ -74,5 +76,36 @@ def query_top_k(vector, top_k: int, namespace: str = "", metadata_filter: Option
 		include_metadata=include_metadata,
 		filter=metadata_filter or {},
 	)
+
+
+def _parse_iso(ts: Optional[str]) -> Optional[datetime]:
+	if not ts:
+		return None
+	try:
+		return datetime.fromisoformat(ts.replace("Z", "+00:00"))
+	except Exception:
+		return None
+
+
+def rerank_by_recency_and_score(matches: Optional[List]) -> List:
+	"""Combine similarity score with a time-decay recency factor (half-life 24h)."""
+	if not matches:
+		return []
+	now = datetime.now(timezone.utc)
+	half_life_hours = 24.0
+	alpha = 0.7  # similarity weight
+
+	def combined(m):
+		score = getattr(m, "score", 0.0) or 0.0
+		meta = getattr(m, "metadata", {}) or {}
+		ts = _parse_iso(meta.get("ts"))
+		if ts is None:
+			rec = 0.5
+		else:
+			age_h = max((now - ts).total_seconds() / 3600.0, 0.0)
+			rec = 0.5 ** (age_h / half_life_hours)
+		return alpha * score + (1 - alpha) * rec
+
+	return sorted(matches, key=combined, reverse=True)
 
 

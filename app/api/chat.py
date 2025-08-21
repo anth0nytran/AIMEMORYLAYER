@@ -2,7 +2,7 @@ from fastapi import APIRouter
 
 from app.models.schemas import ChatRequest, ChatResponse, RetrievedContextItem
 from app.services.embeddings import embed_text
-from app.services.pinecone_client import query_top_k, upsert_vectors
+from app.services.pinecone_client import query_top_k, upsert_vectors, rerank_by_recency_and_score
 from app.utils.settings import get_settings
 from app.services.llm import generate_response
 from datetime import datetime
@@ -22,8 +22,10 @@ async def chat_endpoint(payload: ChatRequest) -> ChatResponse:
 	user_meta = {"user_id": payload.user_id, "role": "user", "text": payload.message, "ts": datetime.utcnow().isoformat()} 
 	upsert_vectors(vectors=[(user_vector_id, query_vec, user_meta)], namespace=payload.user_id)
 	res = query_top_k(vector=query_vec, top_k=payload.top_k, namespace=payload.user_id)
+	# Apply recency-biased rerank
+	matches = rerank_by_recency_and_score(getattr(res, "matches", []))
 	context_items = []
-	for match in res.matches or []:
+	for match in matches:
 		meta = match.metadata or {}
 		context_items.append(RetrievedContextItem(text=meta.get("text", ""), score=getattr(match, "score", None), role=meta.get("role")))
 	# Build a simple prompt with retrieved context

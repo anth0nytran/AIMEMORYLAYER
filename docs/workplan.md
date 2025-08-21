@@ -26,7 +26,7 @@ Last updated: 2025-08-21
 - [x] a) Initialize Pinecone client and index config
 - [x] b) Implement upsert function with `user_id` isolation (namespace/metadata)
 - [x] c) Implement query function with `top_k`, score threshold
-- [ ] d) Add simple recency bias (timestamp re-ranking)
+- [x] d) Add simple recency bias (timestamp re-ranking)
 - [ ] e) Unit tests: upsert and retrieval logic (mocked Pinecone)
 
 ## Main Task 4 — Embeddings + LLM (Hugging Face)
