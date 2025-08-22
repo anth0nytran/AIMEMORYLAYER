@@ -1,4 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
+
+from typing import Any, Dict, Union
 
 from app.models.schemas import ChatRequest, ChatResponse, RetrievedContextItem
 from app.services.embeddings import embed_text
@@ -13,15 +15,32 @@ router = APIRouter(prefix="/chat", tags=["chat"])
 
 
 @router.post("", response_model=ChatResponse)
-async def chat_endpoint(payload: ChatRequest) -> ChatResponse:
+async def chat_endpoint(payload: Union[ChatRequest, Dict[str, Any], str], request: Request) -> ChatResponse:
 	settings = get_settings()
-	query_vec = embed_text(payload.message)
+	# Normalize payload into fields
+	if isinstance(payload, str):
+		user_id = request.headers.get("x-user-id") or "anon"
+		message = payload
+		top_k = settings.top_k
+	elif isinstance(payload, dict):
+		user_id = str(payload.get("user_id") or request.headers.get("x-user-id") or "anon")
+		message = str(payload.get("message") or "")
+		top_k = int(payload.get("top_k") or settings.top_k)
+		if not message:
+			return ChatResponse(response="Missing message", context=[], usage=None, latency_ms=None)
+	else:
+		# ChatRequest case
+		user_id = payload.user_id
+		message = payload.message
+		top_k = payload.top_k
+
+	query_vec = embed_text(message)
 
 	# Upsert the user's message as memory
-	user_vector_id = f"{payload.user_id}:user:{uuid4()}"
-	user_meta = {"user_id": payload.user_id, "role": "user", "text": payload.message, "ts": datetime.now(timezone.utc).isoformat()}
-	upsert_vectors(vectors=[(user_vector_id, query_vec, user_meta)], namespace=payload.user_id)
-	res = query_top_k(vector=query_vec, top_k=payload.top_k, namespace=payload.user_id)
+	user_vector_id = f"{user_id}:user:{uuid4()}"
+	user_meta = {"user_id": user_id, "role": "user", "text": message, "ts": datetime.now(timezone.utc).isoformat()}
+	upsert_vectors(vectors=[(user_vector_id, query_vec, user_meta)], namespace=user_id)
+	res = query_top_k(vector=query_vec, top_k=top_k, namespace=user_id)
 	# Apply recency-biased rerank
 	matches = rerank_by_recency_and_score(getattr(res, "matches", []))
 	context_items = []
@@ -31,14 +50,14 @@ async def chat_endpoint(payload: ChatRequest) -> ChatResponse:
 	# Build a simple prompt with retrieved context
 	context_block = "\n".join([f"- ({c.role}) {c.text}" for c in context_items])
 	system = "You are a helpful assistant. Use the provided memory snippets if relevant."
-	prompt = f"{system}\n\nMemory:\n{context_block}\n\nUser: {payload.message}\nAssistant:"
+	prompt = f"{system}\n\nMemory:\n{context_block}\n\nUser: {message}\nAssistant:"
 	resp_text = generate_response(prompt)
 
 	# Store assistant response for future retrieval
 	assistant_vec = embed_text(resp_text)
-	assistant_vector_id = f"{payload.user_id}:assistant:{uuid4()}"
-	assistant_meta = {"user_id": payload.user_id, "role": "assistant", "text": resp_text, "ts": datetime.now(timezone.utc).isoformat()}
-	upsert_vectors(vectors=[(assistant_vector_id, assistant_vec, assistant_meta)], namespace=payload.user_id)
+	assistant_vector_id = f"{user_id}:assistant:{uuid4()}"
+	assistant_meta = {"user_id": user_id, "role": "assistant", "text": resp_text, "ts": datetime.now(timezone.utc).isoformat()}
+	upsert_vectors(vectors=[(assistant_vector_id, assistant_vec, assistant_meta)], namespace=user_id)
 	return ChatResponse(response=resp_text, context=context_items, usage=None, latency_ms=None)
 
 
